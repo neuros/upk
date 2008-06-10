@@ -377,7 +377,7 @@ int main(int argc, char *argv[])
     package_header_t *phd = &p_head;
     struct stat buf;
 
-    printf("\npackage tool version %s ", VERSION);
+    printf("\npackage tool version %s \n", VERSION);
 
     strncpy((char *)phd->p_name, argv[1], NAMELEN-1);
     if ((fp_w = fopen((char *)phd->p_name, "wb+")) == NULL)

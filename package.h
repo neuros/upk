@@ -58,8 +58,8 @@
 #define ROOTFS_ADDR_END       (256*1024*1024 - 1)
 
 #define UBOOT_FILE_NAME   "u-boot.bin"
-#define KERNEL_FILE_NAME  "kernel.img"
-#define ROOTFS_FILE_NAME  "rootfs.img"
+#define KERNEL_FILE_NAME  "uImage.jffs2"
+#define ROOTFS_FILE_NAME  "rootfs.yaffs2"
 #define SCRIPT_FILE_NAME  "default_env.img"
 
 #define UBOOT_VER_FILE    "u-boot.version"
