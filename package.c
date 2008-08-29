@@ -27,6 +27,8 @@
  *                      change follow the new UPK structure
  *  05/15/2008          JWU
  *                      change for osd2.0
+ *  08/28/2008		T.Qiu
+ *			include UBL
  */
 
 #include <stdio.h>
@@ -228,6 +230,24 @@ static int pack_firmware(FILE *fp_w, uint32 offst, int num, char *name[])
             iif->i_type = IH_TYPE_SCRIPT;
             strncpy((char *)iif->i_name, SCRIPT_FILE_NAME, NAMELEN-1);
         }
+	else if (strncmp(name[i], UBL_FILE_NAME, strlen(UBL_FILE_NAME)) == 0)
+	{
+	     iif->i_type = IH_TYPE_UBL;
+	     strncpy((char *)iif->i_name, UBL_FILE_NAME, NAMELEN-1);
+	     if ((fp_r = fopen(UBL_VER_FILE, "rb")) == NULL)
+	     {
+		  printf("Can't open ubl version file: %s\n", UBL_VER_FILE);
+		  break;
+	     }
+	     for(j = 0; j < sizeof(iif->i_version); j++)
+	     {
+		  if (feof(fp_r)) break;
+		  iif->i_version[j] = fgetc(fp_r);
+		  if ((iif->i_version[j] == 0x0d) || (iif->i_version[j] == 0x0a))
+		       iif->i_version[j] = '\0';
+	     }
+	     fclose(fp_r);
+	}
 
         /* address in flash*/
         switch (iif->i_type)
@@ -246,6 +266,10 @@ static int pack_firmware(FILE *fp_w, uint32 offst, int num, char *name[])
             break;
         case IH_TYPE_SCRIPT:
             break;
+	case IH_TYPE_UBL:
+	    iif->i_startaddr_f = UBL_ADDR_START;
+	    iif->i_endaddr_f   = UBL_ADDR_END;
+	    break;
         default:
             printf("un-handle image type\n");
             break;

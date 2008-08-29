@@ -29,7 +29,7 @@
 #ifndef PACKAGE_H
 #define PACKAGE_H
 
-#define VERSION "3.01"
+#define VERSION "3.02"
 #define NAMELEN   32
 #define VERLEN    20 /* should same as the uboot */
 #define DESCLEN   256
@@ -46,8 +46,11 @@
 #define IH_TYPE_FLATDT		8	/* Binary Flat Device Tree Blob	*/
 #define IH_TYPE_UBOOT           9
 #define IH_TYPE_ROOTFS          10
+#define IH_TYPE_UBL		11
 
 /* addr in flash */
+#define UBL_ADDR_START	      0x00020000
+#define UBL_ADDR_END	      0x000BFFFF
 #define UBOOT_ADDR_START      0x000C0000
 #define UBOOT_SIZE                  (1*1024*1024)
 #define UBOOT_ADDR_END        (UBOOT_ADDR_START+UBOOT_SIZE-1)
@@ -57,11 +60,13 @@
 #define ROOTFS_ADDR_START    (KERNEL_ADDR_END+1)
 #define ROOTFS_ADDR_END       (256*1024*1024 - 1)
 
+#define UBL_FILE_NAME     "ubl_davinci_nand.bin"
 #define UBOOT_FILE_NAME   "u-boot.bin"
 #define KERNEL_FILE_NAME  "uImage.jffs2"
 #define ROOTFS_FILE_NAME  "rootfs.yaffs2"
 #define SCRIPT_FILE_NAME  "default_env.img"
 
+#define UBL_VER_FILE	  "ubl.version"
 #define UBOOT_VER_FILE    "u-boot.version"
 #define KERNEL_VER_FILE   "uImage.version"
 #define ROOTFS_VER_FILE   "rootfs.version"
